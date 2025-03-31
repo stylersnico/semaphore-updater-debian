@@ -1,0 +1,15 @@
+- hosts: localhost
+  connection: local
+  become: yes
+  become_method: sudo
+  tasks:
+   - name: Truncate logs
+     shell: echo "" > /etc/ansible/ansible.log
+
+   - name: Upgrade Semaphore package
+     shell: bash /root/semaphore_latest.sh
+
+   - name: Restart service Semaphore, in all cases
+     ansible.builtin.service:
+       name: semaphore
+       state: restarted
